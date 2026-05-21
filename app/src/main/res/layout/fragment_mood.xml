@@ -1,0 +1,41 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/moodRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/questionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="今天感觉怎么样？"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/happyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开心" />
+
+    <Button
+        android:id="@+id/normalButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="一般" />
+
+    <Button
+        android:id="@+id/tiredButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="有点累" />
+
+    <TextView
+        android:id="@+id/moodResultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择一个心情吧"
+        android:textSize="20sp" />
+
+</LinearLayout>

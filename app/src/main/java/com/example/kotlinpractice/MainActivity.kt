@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,21 +17,23 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val nameEditText = findViewById<EditText>(R.id.nameEditText)
-        val greetButton = findViewById<Button>(R.id.greetButtton)
-        val resultTextView = findViewById<TextView>(R.id.resultTextView)
+        val showGreetingButton = findViewById<Button>(R.id.showGreetingButton)
+        val showWaterButton = findViewById<Button>(R.id.showWaterButton)
+        val showMoodButton = findViewById<Button>(R.id.showMoodButton)
 
-        val moodButton = findViewById<Button>(R.id.moodButton)
-
-        greetButton.setOnClickListener {
-            val name = nameEditText.text.toString()
-            resultTextView.text = buildGreeting(name)
+        showGreetingButton.setOnClickListener {
+            showFragment(GreetingFragment())
+        }
+        showWaterButton.setOnClickListener {
+            showFragment(WaterFragment())
+        }
+        showMoodButton.setOnClickListener {
+            showFragment(MoodFragment())
+        }
+        if (savedInstanceState == null) {
+            showFragment(GreetingFragment())
         }
 
-        moodButton.setOnClickListener {
-            val intent = Intent(this, MoodActivity::class.java)
-            startActivity(intent)
-        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -38,8 +41,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
-    fun buildGreeting(name: String): String {
-        val displayName = name.ifBlank { "游客" }
-        return "你好，$displayName，今天也要好好生活"
+
+    fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, fragment)
+            .commit()
     }
 }

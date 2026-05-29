@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入名字"
-            android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/greetButtton"
-            android:layout_width="wrap_content"
+            android:id="@+id/showGreetingButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="生成问候语" />
+            android:layout_weight="1"
+            android:text="问候" />
 
-        <TextView
-            android:id="@+id/resultTextView"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/showMoodButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="你好，游客，今天也要好好生活"
-            android:textSize="20sp" />
+            android:layout_weight="1"
+            android:text="心情" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+        <Button
+            android:id="@+id/showWaterButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="喝水" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/moodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="点击跳转到mood界面"
-                android:layout_marginTop="40dp"/>
-        </LinearLayout>
-
-
+        <Button
+            android:id="@+id/showTodoButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Todo"/>
     </LinearLayout>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+

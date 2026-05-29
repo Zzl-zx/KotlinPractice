@@ -8,33 +8,49 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import com.example.kotlinpractice.databinding.FragmentMoodBinding
 
-class MoodFragment : Fragment(R.layout.fragment_mood) {
+class MoodFragment : Fragment() {
 
     private  val viewModel: MoodViewModel by viewModels()
+    private var _binding: FragmentMoodBinding?= null
+    private  val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMoodBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val happyButton = view.findViewById<Button>(R.id.happyButton)
-        val normalButton = view.findViewById<Button>(R.id.normalButton)
-        val tiredButton = view.findViewById<Button>(R.id.tiredButton)
-        val moodResultTextView = view.findViewById<TextView>(R.id.moodResultTextView)
 
-        happyButton.setOnClickListener {
+
+        binding.happyButton.setOnClickListener {
             viewModel.selectMood("happy")
         }
-        normalButton.setOnClickListener {
+
+        binding.normalButton.setOnClickListener {
             viewModel.selectMood("normal")
         }
-        tiredButton.setOnClickListener {
+
+        binding.tiredButton.setOnClickListener {
             viewModel.selectMood("tired")
         }
 
         viewModel.moodText.observe(viewLifecycleOwner) { text ->
-            moodResultTextView.text = text
+            binding.moodResultTextView.text = text
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

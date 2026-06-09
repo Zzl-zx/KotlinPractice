@@ -1,10 +1,7 @@
 package com.example.kotlinpractice
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         val showGreetingButton = findViewById<Button>(R.id.showGreetingButton)
         val showWaterButton = findViewById<Button>(R.id.showWaterButton)
         val showMoodButton = findViewById<Button>(R.id.showMoodButton)
+        val showTodoButton= findViewById<Button>(R.id.showTodoButton)
 
         showGreetingButton.setOnClickListener {
             showFragment(GreetingFragment())
@@ -29,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         }
         showMoodButton.setOnClickListener {
             showFragment(MoodFragment())
+        }
+        showTodoButton.setOnClickListener {
+            showFragment(TodoFragment())
         }
         if (savedInstanceState == null) {
             showFragment(GreetingFragment())

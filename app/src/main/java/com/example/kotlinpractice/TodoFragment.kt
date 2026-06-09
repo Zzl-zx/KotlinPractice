@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinpractice.databinding.FragmentTodoBinding
 
 class TodoFragment: Fragment() {
     private val viewModel: TodoViewModel by viewModels()
     private var _binding: FragmentTodoBinding?= null
     private val binding get() = _binding!!
+    private val todoAdapter = TodoAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,15 +33,11 @@ class TodoFragment: Fragment() {
             binding.todoEditText.text.clear()
         }
 
+        binding.todoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.todoRecyclerView.adapter = todoAdapter
+
         viewModel.todoItems.observe(viewLifecycleOwner) { items ->
-            val text = buildString {
-                append("今日待办：\n")
-                items.forEachIndexed { index, item ->
-                    val mark = if (item.done) "[done]" else "[todo]"
-                    append("${index + 1}. $mark ${item.title}\n")
-                }
-            }
-            binding.todoListTextView.text = text
+            todoAdapter.submitList(items)
         }
     }
 

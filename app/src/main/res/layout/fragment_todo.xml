@@ -20,11 +20,10 @@
         android:layout_gravity="center"
         android:text="添加" />
 
-    <TextView
-        android:id="@+id/todoListTextView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todoRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="今天待办："
-        android:textSize="20sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

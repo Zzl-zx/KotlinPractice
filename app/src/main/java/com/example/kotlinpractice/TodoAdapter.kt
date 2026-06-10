@@ -29,6 +29,7 @@ class TodoAdapter(
         val item = items[position]
         val mark = if (item.done) "[done]" else "[todo]"
 
+        holder.binding.todoIndexTextView.text = "${position + 1}."
         holder.binding.todoStatusTextView.text = mark
         holder.binding.todoTitleTextView.text = item.title
         holder.binding.todoDeleteButton.setOnClickListener {

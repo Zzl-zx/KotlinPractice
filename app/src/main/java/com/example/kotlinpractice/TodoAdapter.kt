@@ -7,7 +7,8 @@ import com.example.kotlinpractice.databinding.ItemTodoBinding
 
 class TodoAdapter(
 
-    private val onDeleteClick: (TodoItem) -> Unit
+    private val onDeleteClick: (TodoItem) -> Unit,
+    private val onStatusClick: (TodoItem) -> Unit
 
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
     private var items: List<TodoItem> = emptyList()
@@ -33,7 +34,9 @@ class TodoAdapter(
         holder.binding.todoDeleteButton.setOnClickListener {
             onDeleteClick(item)
         }
-
+        holder.binding.todoStatusTextView.setOnClickListener {
+            onStatusClick(item)
+        }
     }
 
     override fun getItemCount(): Int {

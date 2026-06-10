@@ -32,5 +32,17 @@ class TodoViewModel : ViewModel() {
         _todoItems.value = todoList.toList()
     }
 
+    fun toggleTodoDone(item: TodoItem) {
+        // 找到这条item在列表中的位置
+        val index = todoList.indexOf(item)
+        if (index == -1) return
+
+        // 基于旧对象创建一个新对象，只把done反过来
+        val updatedItem = item.copy(done = !item.done)
+        // 用新对象替换旧对象
+        todoList[index] = updatedItem
+        _todoItems.value = todoList.toList()
+    }
+
 
 }

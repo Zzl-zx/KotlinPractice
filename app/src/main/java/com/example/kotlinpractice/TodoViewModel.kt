@@ -27,5 +27,10 @@ class TodoViewModel : ViewModel() {
         _todoItems.value = todoList.toList()
     }
 
+    fun deleteTodo(item: TodoItem) {
+        todoList.remove(item)
+        _todoItems.value = todoList.toList()
+    }
+
 
 }

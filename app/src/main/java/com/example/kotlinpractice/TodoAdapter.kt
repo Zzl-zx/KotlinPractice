@@ -5,7 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinpractice.databinding.ItemTodoBinding
 
-class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(
+
+    private val onDeleteClick: (TodoItem) -> Unit
+
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
     private var items: List<TodoItem> = emptyList()
 
     class TodoViewHolder(val binding: ItemTodoBinding) :
@@ -26,6 +30,9 @@ class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
         holder.binding.todoStatusTextView.text = mark
         holder.binding.todoTitleTextView.text = item.title
+        holder.binding.todoDeleteButton.setOnClickListener {
+            onDeleteClick(item)
+        }
 
     }
 

@@ -13,7 +13,9 @@ class TodoFragment: Fragment() {
     private val viewModel: TodoViewModel by viewModels()
     private var _binding: FragmentTodoBinding?= null
     private val binding get() = _binding!!
-    private val todoAdapter = TodoAdapter()
+    private val todoAdapter = TodoAdapter { item ->
+        viewModel.deleteTodo(item)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

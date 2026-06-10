@@ -13,9 +13,18 @@
 
     <TextView
         android:id="@+id/todoTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="示例待办" />
+
+    <Button
+        android:id="@+id/todoDeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="示例待办" />
+        android:text="删除"/>
+
 
 </LinearLayout>

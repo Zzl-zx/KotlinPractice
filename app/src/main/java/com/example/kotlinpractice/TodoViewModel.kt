@@ -5,7 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private val todoDao = TodoDatabase.getDatabase(application).todoDao()
@@ -21,14 +23,12 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    // 后面在使用loadTodos()时已经开了协程了，自己就不能再开新的launch了
-    // 改成suspend函数
+
     private suspend fun loadTodos() {
-//        // 用协程启动loadTodos()
-//        viewModelScope.launch {
-//            _todoItems.value = todoDao.getAll()
-//        }
-        _todoItems.value = todoDao.getAll()
+        val items = withContext(Dispatchers.IO) {
+            todoDao.getAll()
+        }
+        _todoItems.value = items
     }
 
     // fragment传进来的是字符串，viewmodel把字符串包装成TodoItem
@@ -41,7 +41,9 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
             done = false
         )
         viewModelScope.launch {
-            todoDao.insert(item)
+            withContext(Dispatchers.IO) {
+                todoDao.insert(item)
+            }
             loadTodos()
         }
 
@@ -49,7 +51,9 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteTodo(item: TodoItem) {
         viewModelScope.launch {
-            todoDao.delete(item)
+            withContext(Dispatchers.IO) {
+                todoDao.delete(item)
+            }
             loadTodos()
         }
     }
@@ -57,7 +61,9 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     fun toggleTodoDone(item: TodoItem) {
         val updateItem = item.copy(done = !item.done)
         viewModelScope.launch {
-            todoDao.update(updateItem)
+            withContext(Dispatchers.IO) {
+                todoDao.update(updateItem)
+            }
             loadTodos()
         }
     }

@@ -10,14 +10,14 @@ import androidx.room.Update
 interface TodoDao {
 
     @Query("SELECT * FROM todo_items")
-    fun getAll(): List<TodoItem>
+    suspend fun getAll(): List<TodoItem>
 
     @Insert
-    fun insert(item: TodoItem)
+    suspend fun insert(item: TodoItem)
 
     @Delete
-    fun delete(item: TodoItem)
+    suspend fun delete(item: TodoItem)
 
     @Update
-    fun update(item: TodoItem)
+    suspend fun update(item: TodoItem)
 }

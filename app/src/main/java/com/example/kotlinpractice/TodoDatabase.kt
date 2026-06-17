@@ -31,7 +31,6 @@ abstract class TodoDatabase : RoomDatabase() {
                     TodoDatabase::class.java,   //告诉room要创建哪个数据库类
                     "todo_database"   // 数据库文件名
                 )
-                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 instance

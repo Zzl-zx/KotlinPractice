@@ -31,6 +31,15 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         _todoItems.value = items
     }
 
+    private fun runDatabaseAction(action:suspend () -> Unit) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                action()
+            }
+            loadTodos()
+        }
+    }
+
     // fragment传进来的是字符串，viewmodel把字符串包装成TodoItem
     fun addTodo(todo: String) {
         if (todo.isBlank()) return
@@ -40,32 +49,17 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
             title = todo,
             done = false
         )
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                todoDao.insert(item)
-            }
-            loadTodos()
+        runDatabaseAction {
+            todoDao.insert(item)
         }
-
     }
 
     fun deleteTodo(item: TodoItem) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                todoDao.delete(item)
-            }
-            loadTodos()
-        }
+        runDatabaseAction { todoDao.delete(item) }
     }
 
     fun toggleTodoDone(item: TodoItem) {
         val updateItem = item.copy(done = !item.done)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                todoDao.update(updateItem)
-            }
-            loadTodos()
-        }
+        runDatabaseAction { todoDao.update(updateItem) }
     }
-
 }

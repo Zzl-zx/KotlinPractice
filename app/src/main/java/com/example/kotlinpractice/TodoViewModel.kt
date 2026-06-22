@@ -63,3 +63,11 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         runDatabaseAction { todoDao.update(updateItem) }
     }
 }
+
+
+sealed class TodoUiState {
+    object Loading : TodoUiState()
+    object Empty : TodoUiState()
+    data class Success(val items: List<TodoItem>) : TodoUiState()
+    data class Error(val message: String) : TodoUiState()
+}

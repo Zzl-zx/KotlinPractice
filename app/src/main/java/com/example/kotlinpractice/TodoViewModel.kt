@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
-    private val todoDao = TodoDatabase.getDatabase(application).todoDao()
+    private val todoDao = TodoDatabase.getDatabase(application).todoDao() //从数据库里面拿到dao
+    private val repository = TodoRepository(todoDao) //把这个TodoDao交给TodoRepository
 
     // 内部可改
     private val _todoItems = MutableLiveData<List<TodoItem>>(emptyList())
@@ -19,24 +20,19 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            loadTodos()
+            repository.getAll().collect { items ->
+                _todoItems.value = items
+            }
         }
     }
 
 
-    private suspend fun loadTodos() {
-        val items = withContext(Dispatchers.IO) {
-            todoDao.getAll()
-        }
-        _todoItems.value = items
-    }
 
     private fun runDatabaseAction(action:suspend () -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 action()
             }
-            loadTodos()
         }
     }
 
@@ -50,17 +46,17 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
             done = false
         )
         runDatabaseAction {
-            todoDao.insert(item)
+            repository.insert(item)
         }
     }
 
     fun deleteTodo(item: TodoItem) {
-        runDatabaseAction { todoDao.delete(item) }
+        runDatabaseAction {repository.delete(item) }
     }
 
     fun toggleTodoDone(item: TodoItem) {
         val updateItem = item.copy(done = !item.done)
-        runDatabaseAction { todoDao.update(updateItem) }
+        runDatabaseAction { repository.update(updateItem) }
     }
 }
 

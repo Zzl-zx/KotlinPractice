@@ -5,12 +5,13 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoDao {
 
     @Query("SELECT * FROM todo_items")
-    suspend fun getAll(): List<TodoItem>
+    fun getAll(): Flow<List<TodoItem>>
 
     @Insert
     suspend fun insert(item: TodoItem)
